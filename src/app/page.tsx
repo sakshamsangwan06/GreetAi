@@ -38,8 +38,8 @@ export default function Home() {
   if(session){
     return(
       <div className="p-4 flex flex-col gap-y-4">
-        <p>Logged in as{session.user.name}</p>
-        <Button onClick={() => authClient.signOut()}>Sign </Button>
+        <p>Logged in as {session.user.name}</p>
+        <Button onClick={() => authClient.signOut()}>Sign Out </Button>
       </div>
     )
   }
