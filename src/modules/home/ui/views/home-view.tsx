@@ -24,7 +24,6 @@ export const HomeView = () => {
         }>
         Sign Out
         </Button>
-      Home Page
     </div>
   );
 }
