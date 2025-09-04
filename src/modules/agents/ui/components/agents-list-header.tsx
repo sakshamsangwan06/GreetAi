@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { PlusIcon, XCircleIcon } from "lucide-react";
-import { NewAgentsDialog } from "./new-agents-dialog";
+import { NewAgentsDialog } from "./new-agent-dialog";
 import { useState } from "react";
 import { useAgentsFilters } from "../../hooks/use-agents-filters";
 import { AgentsSearchFilter } from "./agents-search-filters";
