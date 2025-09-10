@@ -8,11 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "dev:webhook": "ngrok http --url=similar-nonscoring-tera.ngrok-free.app 3000"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
     "@dicebear/core": "^9.2.4",
+    "@google-cloud/speech": "^7.2.0",
+    "@google-cloud/text-to-speech": "^6.3.0",
+    "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.2.1",
     "@neondatabase/serverless": "^1.0.0",
     "@radix-ui/react-accordion": "^1.2.12",
@@ -42,6 +46,7 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@stream-io/node-sdk": "^0.6.5",
+    "@stream-io/openai-realtime-api": "^0.3.3",
     "@stream-io/video-react-sdk": "^1.20.2",
     "@tanstack/react-query": "^5.66.3",
     "@tanstack/react-table": "^8.21.3",
@@ -49,6 +54,7 @@
     "@trpc/server": "^11.1.2",
     "@trpc/tanstack-react-query": "^11.1.2",
     "better-auth": "^1.2.8",
+    "bufferutil": "^4.0.9",
     "class-variance-authority": "^0.7.1",
     "client-only": "^0.0.1",
     "clsx": "^2.1.1",
@@ -75,7 +81,9 @@
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
+    "utf-8-validate": "^6.0.5",
     "vaul": "^1.1.2",
+    "ws": "^8.18.3",
     "zod": "^3.25.7"
   },
   "devDependencies": {
@@ -85,6 +93,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
     "drizzle-kit": "^0.31.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
