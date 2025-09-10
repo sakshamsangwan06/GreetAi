@@ -24,10 +24,6 @@ export const meetingsRouter = createTRPCRouter({
             }
         ]);
 
-
-
-
-
         const expirationTime = Math.floor(Date.now() / 1000) + 3600;// 1 hr expiry can be changed
         const issuedAt = Math.floor(Date.now() / 1000-60);// 1 min before expiry can be changed
 
@@ -133,7 +129,7 @@ export const meetingsRouter = createTRPCRouter({
                 {
                     id: existingAgent.id,
                     name:existingAgent.name,
-                    role:"agent",
+                    role:"user",
                     image: generateAvatarUri({
                         seed: existingAgent.name,
                         variant: "botttsNeutral"
