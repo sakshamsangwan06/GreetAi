@@ -63,12 +63,18 @@ export const MeetingForm =({
                 await queryClient.invalidateQueries(
                     trpc.meetings.getMany.queryOptions({}),
                 );
+                  await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions(),
+                );
                 //todo invalid free tire usage 
                 onSuccess?.(data.id);
             },
             onError:(error)=>{
                 toast.error(error.message);
                 //todo check id error code is forebidden , redirect to /upgrade 
+                if (error.data?.code === "FORBIDDEN"){
+                    router.push("/upgrade");
+                }
             },
        
             
