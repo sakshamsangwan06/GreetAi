@@ -49,11 +49,18 @@ export const AgentForm =({
                 await queryClient.invalidateQueries(
                     trpc.agents.getMany.queryOptions({}),
                 );
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions(),
+                );
                 //todo invalid free tire usage 
                 onSuccess?.();
             },
             onError:(error)=>{
                 toast.error(error.message);
+                 if (error.data?.code === "FORBIDDEN"){
+                    router.push("/upgrade");
+                }
+
                 //todo check id error code is forebidden , redirect to /upgrade 
             },
        
@@ -66,17 +73,23 @@ export const AgentForm =({
                 await queryClient.invalidateQueries(
                     trpc.agents.getMany.queryOptions({}),
                 );
+                // await queryClient.invalidateQueries(
+                //     trpc.premium.getFreeUsage.queryOptions(),
+                // );
 
                 if(initialValues?.id){
                     await queryClient.invalidateQueries(
                         trpc.agents.getOne.queryOptions({id: initialValues.id}),
                     )
                 }
+
                 //todo: invalidate free tire usage
+
                 onSuccess?.();
             },
             onError:(error)=>{
                 toast.error(error.message);
+               
                 //todo check id error code is forebidden , redirect to /upgrade 
             },
        
