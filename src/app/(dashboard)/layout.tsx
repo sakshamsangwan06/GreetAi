@@ -4,7 +4,7 @@ import { DashboardNavbar } from "@/modules/dashboard/ui/components/dashboar-navb
 interface Props {
     children: React.ReactNode;
 }
-import { Children } from "react";
+
 
 const Layout = ({children}:Props) => {
     return(
