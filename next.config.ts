@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  async redirect(){
+  async redirects(){
     return[
       {
       source:"/",
