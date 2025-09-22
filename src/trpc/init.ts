@@ -26,9 +26,9 @@ export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
 
 export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
-  const incomingHeaders = await headers(); // ✅ await since it's async
+  const incomingHeaders = await headers(); // ✅ await since async in your setup
   const session = await auth.api.getSession({
-    headers: new Headers(incomingHeaders), 
+    headers: new Headers(incomingHeaders), // ✅ convert to real Headers
   });
 
   if (!session) {
@@ -38,12 +38,23 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
   return next({ ctx: { ...ctx, auth: session } });
 });
 
-
 export const premiumProcedure = (entity: 'meetings' | 'agents') =>
   protectedProcedure.use(async ({ ctx, next }) => {
-    const customer = await polarClient.customers.getStateExternal({
-      externalId: ctx.auth.user.id,
-    });
+    let customer: { activeSubscriptions: any[] };
+
+    try {
+      console.log('Polar externalId:', ctx.auth.user.id); // ✅ debug log
+      customer = await polarClient.customers.getStateExternal({
+        externalId: ctx.auth.user.id,
+      });
+    } catch (err: any) {
+      if (err?.error === 'ResourceNotFound' || err?.detail === 'Not found') {
+        // ✅ Fallback if no Polar customer exists yet
+        customer = { activeSubscriptions: [] };
+      } else {
+        throw err; // bubble up other errors
+      }
+    }
 
     const [userMeetings] = await db
       .select({
@@ -67,20 +78,14 @@ export const premiumProcedure = (entity: 'meetings' | 'agents') =>
     const isFreeAgentLimitReached = userAgentsCount >= MAX_FREE_AGENTS;
     const isFreeMeetingLimitReached = userMeetingsCount >= MAX_FREE_MEETINGS;
 
-    const shouldThrowMeetingError =
-      entity === 'meetings' && isFreeMeetingLimitReached && !isPremium;
-
-    const shouldThrowAgentError =
-      entity === 'agents' && isFreeAgentLimitReached && !isPremium;
-
-    if (shouldThrowMeetingError) {
+    if (entity === 'meetings' && isFreeMeetingLimitReached && !isPremium) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: `You have reached the free meetings limit. Please upgrade to create more meetings.`,
       });
     }
 
-    if (shouldThrowAgentError) {
+    if (entity === 'agents' && isFreeAgentLimitReached && !isPremium) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: `You have reached the free agents limit. Please upgrade to create more agents.`,
