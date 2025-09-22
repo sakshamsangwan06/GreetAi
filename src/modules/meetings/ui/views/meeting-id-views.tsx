@@ -87,8 +87,6 @@ return (
        {isActive &&<ActiveState meetingId={meetingId}/>}
        {isUpcoming && (<UpcomingState
        meetingId={meetingId}
-       onCancelMeeting={()=>{}}
-       isCancelling={false}
        />)}
     </div>
     </>

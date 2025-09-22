@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import {z} from "zod";
 import { agentsInsertSchema } from "../../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { agents } from "@/db/schema";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

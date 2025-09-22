@@ -22,7 +22,6 @@ import { agents, meetings } from "@/db/schema";
 
 import { streamVideo } from "@/lib/stream-video";
 // Missing import
-import { User } from "@stream-io/node-sdk"; // ✅ NEEDED
 import { inngest } from "@/inngest/client";
 import { streamChat } from "@/lib/stream-chat";
 
